@@ -1,127 +1,108 @@
-from fastapi import APIRouter, status,Depends, HTTPException
-from schemas.product import Products, ProductUpdate
-from services import product as product_service
-
+from fastapi import APIRouter, Depends,HTTPException
 from sqlalchemy.orm import Session
+
 from database.connection import get_db
-from database.models import Product
-from schemas.product import ProductCreate
+from schemas.product import ProductCreate, ProductUpdate
+
+from services.product_service import (
+    get_products,
+    get_product,
+    add_product,
+    update_product_data,
+    patch_product_data,
+    remove_product
+)
 
 router = APIRouter()
 
 
+# GET ALL PRODUCTS
 @router.get("/products")
-def get_products(db: Session = Depends(get_db)):
-    return db.query(Product).all()
+def read_products(db: Session = Depends(get_db)):
+    return get_products(db)
 
 
- 
-
-@router.post("/products", status_code=201)
-def add_product(
-    product: ProductCreate,
-    db: Session = Depends(get_db)
-):
-    new_product = Product(
-        name=product.name,
-        price=product.price
-    )
-
-    db.add(new_product)
-    db.commit()
-    db.refresh(new_product)
-
-    return new_product
-
+# GET PRODUCT BY ID
 @router.get("/products/{product_id}")
-def get_product(
+def read_product(
     product_id: int,
     db: Session = Depends(get_db)
 ):
-    product = db.query(Product).filter(Product.id == product_id).first()
+    return get_product(db, product_id)
 
-    if product is None:
-        raise HTTPException(
-            status_code=404,
-            detail="Product not found"
-        )
 
-    return product
+# CREATE PRODUCT
+@router.post("/products", status_code=201)
+def create_new_product(
+    product: ProductCreate,
+    db: Session = Depends(get_db)
+):
+    return add_product(
+        db,
+        product.name,
+        product.price
+    )
 
+
+# PUT - FULL UPDATE
 @router.put("/products/{product_id}")
 def update_product(
     product_id: int,
     product: ProductCreate,
     db: Session = Depends(get_db)
 ):
-    existing_product = db.query(Product).filter(
-        Product.id == product_id
-    ).first()
+    return update_product_data(
+        db,
+        product_id,
+        product.name,
+        product.price
+    )
 
-    if existing_product is None:
-        raise HTTPException(
-            status_code=404,
-            detail="Product not found"
-        )
 
-    existing_product.name = product.name
-    existing_product.price = product.price
-
-    db.commit()
-    db.refresh(existing_product)
-
-    return existing_product
-
+# PATCH - PARTIAL UPDATE
 @router.patch("/products/{product_id}")
-def patch_product(
+def partial_update_product(
     product_id: int,
     product: ProductUpdate,
     db: Session = Depends(get_db)
 ):
-    existing_product = db.query(Product).filter(
-        Product.id == product_id
-    ).first()
-
-    if existing_product is None:
-        raise HTTPException(
-            status_code=404,
-            detail="Product not found"
-        )
-
-    if product.name is not None:
-        existing_product.name = product.name
-
-    if product.price is not None:
-        existing_product.price = product.price
-
-    db.commit()
-    db.refresh(existing_product)
-
-    return existing_product
+    return patch_product_data(
+        db,
+        product_id,
+        product.name,
+        product.price
+    )
 
 
+# DELETE PRODUCT
 @router.delete("/products/{product_id}")
 def delete_product(
     product_id: int,
     db: Session = Depends(get_db)
 ):
-    existing_product = db.query(Product).filter(
-        Product.id == product_id
-    ).first()
+    return remove_product(db, product_id)
 
-    if existing_product is None:
+@router.patch("/products/{product_id}/stock")
+def add_stock(
+    product_id: int,
+    quantity: int,
+    db: Session = Depends(get_db)
+):
+
+    if quantity <= 0:
         raise HTTPException(
-            status_code=404,
-            detail="Product not found"
+            status_code=400,
+            detail="Stock quantity must be greater than 0"
         )
 
-    db.delete(existing_product)
+    product = get_product(db, product_id)
+
+    product.stock_quantity += quantity
+
     db.commit()
+    db.refresh(product)
 
     return {
-        "message": "Product deleted successfully"
+        "message": "Stock added successfully",
+        "stock_quantity": product.stock_quantity
     }
-
-
-
-

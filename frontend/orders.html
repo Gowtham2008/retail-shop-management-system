@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Orders - Retail Shop</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            color: #1f2937;
+        }
+
+        nav {
+            background: #1f2937;
+            color: white;
+            padding: 18px 40px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav h2 {
+            font-size: 22px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: auto;
+            padding: 40px;
+        }
+
+        .header {
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #6b7280;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 14px;
+            margin-bottom: 30px;
+
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .card h2 {
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+            align-items: end;
+        }
+
+        .input-box {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        label {
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        select,
+        input {
+            width: 230px;
+            padding: 12px;
+
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+
+            font-size: 15px;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        button {
+            padding: 12px 22px;
+            border: none;
+            border-radius: 8px;
+
+            background: #2563eb;
+            color: white;
+
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th {
+            background: #f3f4f6;
+            text-align: left;
+            padding: 15px;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .total {
+            text-align: right;
+            font-size: 22px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .create-order {
+            margin-top: 20px;
+            background: #16a34a;
+        }
+
+        .create-order:hover {
+            background: #15803d;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <nav>
+
+        <h2>🛍️ Retail Shop</h2>
+
+        <div>
+            <a href="/index.html">Dashboard</a>
+            <a href="/products.html">Products</a>
+            <a href="/customers.html">Customers</a>
+            <a href="/orders.html">Orders</a>
+        </div>
+
+    </nav>
+
+
+    <main>
+
+        <div class="header">
+
+            <h1>🛒 Create Order</h1>
+
+            <p>Create a new customer order</p>
+
+        </div>
+
+
+        <!-- ORDER FORM -->
+
+        <div class="card">
+
+            <h2>Order Details</h2>
+
+            <div class="form-row">
+
+                <div class="input-box">
+
+                    <label>Customer</label>
+
+                    <select id="customerSelect">
+
+                        <option value="">
+                            Select Customer
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="input-box">
+
+                    <label>Product</label>
+
+                    <select id="productSelect">
+
+                        <option value="">
+                            Select Product
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="input-box">
+
+                    <label>Quantity</label>
+
+                    <input
+                        type="number"
+                        id="quantity"
+                        min="1"
+                        step="1"
+                        value="1"
+                    >
+
+                </div>
+
+
+                <button onclick="addToCart()">
+                    Add to Cart
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- CART -->
+
+        <div class="card">
+
+            <h2>🛒 Cart</h2>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Subtotal</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="cartTable">
+                </tbody>
+
+            </table>
+
+
+            <div class="total">
+
+                Total: ₹<span id="cartTotal">0</span>
+
+            </div>
+
+
+            <button
+                class="create-order"
+                onclick="createOrder()"
+            >
+                Create Order
+            </button>
+
+        </div>
+        <div class="card">
+
+    <h2>📋 Order History</h2>
+
+    <table>
+
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Customer ID</th>
+                <th>Date</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody id="ordersTable">
+        </tbody>
+
+    </table>
+
+</div>
+
+    </main>
+
+
+    <script src="/app.js"></script>
+
+</body>
+
+</html>

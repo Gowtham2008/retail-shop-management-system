@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Products - Retail Shop</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            color: #1f2937;
+        }
+
+        /* NAVBAR */
+
+        nav {
+            background: #1f2937;
+            color: white;
+            padding: 18px 40px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav h2 {
+            font-size: 22px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            font-size: 15px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        /* MAIN */
+
+        main {
+            padding: 40px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .header {
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #6b7280;
+        }
+
+        /* FORM CARD */
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 14px;
+            margin-bottom: 30px;
+
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .card h2 {
+            margin-bottom: 25px;
+        }
+
+        form {
+            display: flex;
+            gap: 20px;
+            align-items: end;
+        }
+
+        .input-box {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        label {
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        input {
+            width: 260px;
+            padding: 12px;
+
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+
+            font-size: 15px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        button {
+            padding: 12px 24px;
+
+            background: #2563eb;
+            color: white;
+
+            border: none;
+            border-radius: 8px;
+
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        /* TABLE */
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f3f4f6;
+            text-align: left;
+            padding: 15px;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        tr:hover {
+            background: #f9fafb;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+
+            nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav a {
+                margin-left: 10px;
+            }
+
+            main {
+                padding: 20px;
+            }
+
+            form {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            input {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav>
+
+        <h2>🛍️ Retail Shop</h2>
+
+        <div>
+            <a href="/index.html">Dashboard</a>
+            <a href="/products.html">Products</a>
+            <a href="/customers.html">Customers</a>
+            <a href="/orders.html">Orders</a>
+        </div>
+
+    </nav>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main>
+
+        <div class="header">
+
+            <h1>Products</h1>
+
+            <p>Manage your shop products</p>
+
+        </div>
+
+
+        <!-- ADD PRODUCT -->
+
+        <div class="card">
+
+            <h2>➕ Add Product</h2>
+
+            <form id="productForm">
+
+                <div class="input-box">
+
+                    <label>Product Name</label>
+
+                    <input
+                        type="text"
+                        id="productName"
+                        placeholder="Enter product name"
+                        minlength="2"
+                        maxlength="50"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="input-box">
+
+                    <label>Price (₹)</label>
+
+                    <input
+                        type="number"
+                        id="productPrice"
+                        placeholder="Enter price"
+                        min="0.01"
+                        step="0.01"
+                        required
+                    >
+
+                </div>
+
+
+                <button type="submit">
+                    Add Product
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- PRODUCT TABLE -->
+
+        <div class="card">
+
+            <h2>📦 Product List</h2>
+
+            <table>
+
+                <thead>
+    <tr>
+        <th>ID</th>
+        <th>Product Name</th>
+        <th>Price</th>
+        <th>Stock</th>
+        <th>Action</th>
+    </tr>
+</thead>
+
+                <tbody id="productTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </main>
+
+
+    <script src="/app.js"></script>
+
+</body>
+
+</html>

@@ -113,16 +113,27 @@ def test(shop=Depends(get_shop)):
 from fastapi import FastAPI
 from database.connection import Base, engine
 from database.models import Product
-from routers import product
+from routers import product,order,customer,category
 
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-
-@app.get("/")
-def home():
-    return {"message": "Welcome to Retail Shop"}
+ 
 
 
 app.include_router(product.router)   
+app.include_router(order.router)
+app.include_router(customer.router)
+app.include_router(category.router)
+
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+app.mount("/",StaticFiles(directory="frontend", html=True),name="frontend")

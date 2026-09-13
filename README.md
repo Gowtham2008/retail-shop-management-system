@@ -71,7 +71,7 @@ The project is designed as a **simple demonstration project** to understand back
 
 The project follows a simple layered architecture:
 
-
+'''
 Frontend
    ↓
 FastAPI Routers
@@ -83,6 +83,9 @@ Repositories
 SQLAlchemy ORM
    ↓
 MySQL Database
+'''
+
+
 
 <img width="1536" height="1024" alt="cfe4c60d-e9f8-4dc8-b075-1a460d0050c8" src="https://github.com/user-attachments/assets/39739f3f-36cb-4b6c-8a28-ff688f2ec1ee" />
 

@@ -84,7 +84,8 @@ SQLAlchemy ORM
    ↓
 MySQL Database
 
-https://chatgpt.com/backend-api/estuary/content?id=file_0000000019ec81fbba92777f4b84e04d&ts=497029&p=fs&cid=1&sig=ce3fc28090b266dfb3819ce55d4213c8deebabff23c8fb31c8244f33e8012e5e&v=0
+<img width="1536" height="1024" alt="cfe4c60d-e9f8-4dc8-b075-1a460d0050c8" src="https://github.com/user-attachments/assets/39739f3f-36cb-4b6c-8a28-ff688f2ec1ee" />
+
 
 ## output
 
